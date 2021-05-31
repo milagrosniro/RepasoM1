@@ -12,16 +12,38 @@ const { Queue, Node, LinkedList, BinarySearchTree } = require('./DS.js');
 // arrayDeEjemplo = [1, 2, [3, 4], 5, [6, 7, 8]];
 // recursiveArrayPrint(arrayDeEjemplo) --> retorna [1, 2, 3, 4, 5, 6, 7, 8]
 function recursiveArrayPrint(array, arr = []) {
-
-	for(var i = 0; i < array.length; i++) {
-		if(Array.isArray(array[i])) {
-			recursiveArrayPrint(array[i], arr)
-		} else {
-			arr.push(array[i])
-		}
-	}
-	return arr;
+	// Tu código acá
+for(let i=0; i<array.length; i++){
+    if(Array.isArray(array[i])){
+        recursiveArrayPrint(array[i],arr);
+    }else{
+        arr.push(array[i]);
+    }
 }
+return arr;
+}
+
+recursiveArrayPrint([1, 2, [3, 4], 5, [6, 7, 8]]);
+
+/**OTRA FORMA DE RECURSIVIDAD */
+
+function recursiveArrayPrint(){
+    let arr=[];
+    return function iteracion(array){
+        for(let i=0; i<array.length; i++){
+            if(Array.isArray(array[i])){
+                iteracion(array[i])
+            }
+            else{
+                arr.push(array[i])
+            }
+        }
+        return arr;
+    }
+}
+
+let recursive = recursiveArrayPrint();
+recursive([1, 2, [3, 4], 5, [6, 7, 8]]);
 
 // ----- EJERCICIO 2 ------
 // Closures:
@@ -39,15 +61,9 @@ function recursiveArrayPrint(array, arr = []) {
 // sumaDiez(2);  --> Devolverá 12 (Ya que 2 + 10 = 12)
 // sumaDiez(11); --> Devolverá 21 (Ya que 11 + 10 = 21)
 function closureSum(numFijo) {
-	// Tu código acá
-
-
-
-
-
-	// return function(n) {
-	// 	return numFijo + n
-	// }
+	return function suma(num){
+        return numFijo + num;
+    }
 }
 
 /* ----- EJERCICIO 3 ------
@@ -60,14 +76,34 @@ Ejemplo:
 //  / \
 // 5   9
 // resultado: [5,8,9,32,64] */
-BinarySearchTree.prototype.toArray = function () {
-	// Tu código acá
-	var arr = [];
-	var cb = function(value) {
-		arr.push(value)
-	}
-	this.depthFirstForEach(cb)
-	return arr;
+function BinarySearchTree(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null
+  
+  }
+
+BinarySearchTree.prototype.toArray = function () { //??????????
+	// if(!this.value) return null;
+    // let array=[]
+
+    // if(this.value && !this.left && this.right) return array.push(this.value); //caso de corte
+
+    // if(this.left && this.value > this.left){
+    //     this.left.toArray();
+    // }
+    // else if(this.right && this.value > this.right){
+    //     this.right.toArray();
+    // }
+
+    // return array;
+let array=[];
+var cb = function(value){
+     array.push(value);
+}
+this.depthFirstForEach(cb);
+return array;
+
 };
 
 // ----- EJERCICIO 4 ------
@@ -114,18 +150,25 @@ var estudiantes = {
 	}
 }
 
-function recorrerAlumno(idCurso, objeto, cb) {
-	// Tu código acá
-	for(var key in objeto) {
-		if(objeto[key] instanceof Object) {
-			recorrerAlumno(idCurso, objeto[key], cb)
-		} else {
-			if(Number(key) === idCurso) {
-				cb()
-			}
-		}
-	}
+
+
+function recorrerAlumno(idCurso, objeto) {
+//creo contador
+    let contador = 0;
+//itero el objeto, en esta iteracion clave es el nombre de cada objeto 
+    for(let clave in objeto){
+//esto muestra el curso  que corresponde  al codigo para poder compararlo, si coincide devuelve el nombre dle codigo
+//si no coincide devuelve undefined.      
+        let codigoCursoAlumno = objeto[clave].cursos[idCurso];
+        if(codigoCursoAlumno !== undefined){
+            contador = contador + 1; // si ocinciden que se sume un valor del contador
+        }
+
+    }
+return contador; //retorna contador.
 }
+
+   
 
 // ----- EJERCICIO 5 ------
 // Implementar la función crearQueues, que recibe un array con anidaciones como parámetro.
@@ -143,33 +186,22 @@ function recorrerAlumno(idCurso, objeto, cb) {
 // Recorrerlo usando recursión.
 
 
-function crearQueues(arr, numerosPares, numerosImpares) {
-	// Tu código acá
-	if(!numerosPares) var numerosPares = new Queue();
-	if(!numerosImpares) var numerosImpares = new Queue();
+function crearQueues(arr) {
+	let arraySimple = recursiveArrayPrint(arr);
+    let queuePares = [];
+    let queueImp =[];
 
-	for(var i = 0; i < arr.length; i++) {
-		if(Array.isArray(arr[i])) {
-			crearQueues(arr[i], numerosPares, numerosImpares)
-		}
-		if(arr[i] % 2 === 0) numerosPares.enqueue(arr[i])
-		else if(arr[i] % 2 === 1) numerosImpares.enqueue(arr[i])
-	}
-
-	numerosPares.array.sort(function(a, b) {
-		return a - b
-	})
-
-	numerosImpares.array.sort(function(a, b) {
-		return a - b
-	})
-
-	var obj = {
-		par: numerosPares,
-		impar: numerosImpares
-	}
-
-	return obj;
+    for (let i=0; i<arraySimple.length; i++){
+        if(arraySimple[i] % 2 === 0){
+            queuePares.push(arraySimple[i]);
+        }else{
+            queueImp.push(arraySimple[i]);
+        }
+    }
+    let obj = {};
+    obj["par"] = queuePares;
+    obj["impar"] = queueImp;
+    return obj;
 }
 
 crearQueues([1, 3, 5, 7, 8, 3, 2, 1, [3, 1, 2, 4, 6, 8, 3, 9]])

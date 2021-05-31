@@ -7,4 +7,32 @@
  * @returns {Number} - deberia retornar un number.
  */
 
-function productOfArray(arr) {}
+ function productOfArray(arr) {
+    let result= 1;
+    for(let i=0; i<arr.length;i++){
+        result = result * arr[i];
+        //console.log(result)
+    }
+    return result;
+}
+
+//arrowFunction
+
+let productOfArray = (arr) =>{
+    let result= 1;
+    for(let i=0; i<arr.length;i++){
+        result = result * arr[i];
+        //console.log(result)
+    }
+    return result;
+}
+/**RECURSIVIDAD */
+
+function productOfArray(arr){
+    if(arr.length === 0) return "array vacio";
+    if(arr.length === 1) return arr[0];
+    
+    return arr.shift()*productOfArray(arr());
+
+}
+[1,2,3,4]

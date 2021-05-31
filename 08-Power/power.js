@@ -1,5 +1,5 @@
 /**
- * Escribe una funcion llamada powers que reciba una base y un exponente.
+ * Escribe una funcion llamada power que reciba una base y un exponente.
  * Debera retornar la base por el exponente. Similar a como funciona 
  * Math.pow();
  * No deberia fijarme los casos negativos
@@ -8,4 +8,14 @@
  * @returns {Array || undefined} - deberia retornar un array o undefined.
  */
 
-function power(base, exp) {}
+function power(base, exp) {
+    if((base|| exp) <= 0) return 0;
+    return base*exp;
+}
+
+//arrowFunction
+
+let power = (base,exp) =>{
+    if((base|| exp) <= 0) return 0;
+    return base*exp;
+}
