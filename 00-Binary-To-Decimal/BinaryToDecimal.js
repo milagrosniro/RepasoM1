@@ -13,8 +13,8 @@
  * @returns {boolean} - deberia retornar true o false.
  */
 
-/*
-Pasos:
+/* 
+Pasos a seguir:
 -transformar el string en un array y darlo vuelta
 -iterarlo y en cada iteracion hacer la operacion = digito*base^posicion
 -sumar los resultados de cada iteracion --> numero decimal
